@@ -1,7 +1,7 @@
 import "../styles/global.css";
 
 import { Rubik } from "next/font/google";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { AppProviders } from "@/providers/AppProviders";
 
 const rubik = Rubik({

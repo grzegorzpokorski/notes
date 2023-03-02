@@ -1,8 +1,11 @@
 "use client";
 
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
+import { SessionProvider } from "next-auth/react";
 import { ReactQueryProvider } from "./ReactQueryProvider";
 
 export const AppProviders = ({ children }: { children: ReactNode }) => (
-  <ReactQueryProvider>{children}</ReactQueryProvider>
+  <SessionProvider>
+    <ReactQueryProvider>{children}</ReactQueryProvider>
+  </SessionProvider>
 );

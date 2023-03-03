@@ -28,7 +28,6 @@ module.exports = {
     "@typescript-eslint/require-await": "off",
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-unused-vars": "off",
-    "@typescript-eslint/consistent-type-imports": "error",
     "@typescript-eslint/no-unsafe-assignment": "error",
     "@next/next/no-html-link-for-pages": "off",
     "import/order": "error",

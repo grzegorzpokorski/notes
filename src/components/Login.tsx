@@ -4,36 +4,38 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 
 export const Login = () => {
-  const { data: session } = useSession();
-  if (session) {
-    return (
-      <>
-        {session.user?.image && (
-          <Image
-            src={session.user.image}
-            alt={`${session.user.name ? session.user.name : "user"} image`}
-            width={40}
-            height={40}
-          />
-        )}
-        <button
-          onClick={() => void signOut()}
-          className="bg-zinc-600 text-white py-2 px-4 hover:bg-zinc-800"
-        >
-          Sign out
-        </button>
-      </>
-    );
-  }
+  const { data: session, status } = useSession();
+
+  const login = () => {
+    void signIn();
+  };
+
+  const logout = () => {
+    void signOut();
+  };
+
   return (
-    <>
-      Not signed in <br />
-      <button
-        onClick={() => void signIn()}
-        className="bg-zinc-600 text-white py-2 px-4 hover:bg-zinc-800"
-      >
-        Sign in
-      </button>
-    </>
+    <div>
+      {status === "authenticated" ? (
+        <>
+          <button
+            className="bg-green-500 text-zinc-800 hover:bg-green-800"
+            onClick={logout}
+          >
+            Wyloguj
+          </button>
+          <pre>
+            {session.user?.email} {session.user?.name} {session.user?.image}
+          </pre>
+        </>
+      ) : (
+        <button
+          className="bg-green-500 text-zinc-800 hover:bg-green-800"
+          onClick={login}
+        >
+          Zaloguj
+        </button>
+      )}
+    </div>
   );
 };

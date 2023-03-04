@@ -1,5 +1,5 @@
 import { fetchQuery } from "@/lib/fetchQuery";
-import { notesSchema } from "@/utlis/schemas";
+import { noteSchema } from "@/utlis/schemas";
 import { Note } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 import { FaEdit, FaTrash } from "react-icons/fa";
@@ -13,10 +13,17 @@ export const NoteItem = ({
   refetchNotes: () => void;
 }) => {
   const deleteNote = useMutation({
-    mutationFn: async (id: number) =>
-      await fetch(`http://localhost:3000/api/note/${id}`, {
+    mutationFn: async (id: number) => {
+      const x = await fetchQuery({
+        url: `http://localhost:3000/api/note/${id}`,
         method: "DELETE",
-      }),
+        schema: noteSchema,
+      });
+      console.log(x);
+    },
+    // await fetch(`http://localhost:3000/api/note/${id}`, {
+    //   method: "DELETE",
+    // }),
     onSuccess: () => refetchNotes(),
   });
 

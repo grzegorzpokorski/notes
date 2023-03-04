@@ -1,12 +1,14 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-const defaultStyles = "inline-flex gap-3 items-center rounded text-base";
+const defaultStyles =
+  "inline-flex gap-1.5 justify-center items-center rounded text-base text-white py-2 px-4";
 
-type Variants = "default";
+type Variants = "default" | "delete";
 
 const style = {
-  default: twMerge("bg-blue-600 hover:bg-blue-800 text-white py-2 px-4"),
+  default: twMerge("bg-blue-600 hover:bg-blue-800"),
+  delete: twMerge("bg-red-500 hover:bg-red-700"),
 } as const;
 
 type ButtonProps = {

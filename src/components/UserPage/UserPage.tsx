@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { NoteList } from "../NoteList/NoteList";
 
 export const UserPage = () => {
-  const { data: sesstion, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export const UserPage = () => {
   }, [router, status]);
 
   if (status === "loading") {
-    return <p className="text-red-500">loading</p>;
+    return <p>loading</p>;
   }
 
   if (status === "authenticated") {

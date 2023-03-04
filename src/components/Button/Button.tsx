@@ -4,11 +4,12 @@ import { twMerge } from "tailwind-merge";
 const defaultStyles =
   "inline-flex gap-1.5 justify-center items-center rounded text-base text-white py-2 px-4";
 
-type Variants = "default" | "delete";
+type Variants = "default" | "red" | "green";
 
 const style = {
   default: twMerge("bg-blue-600 hover:bg-blue-800"),
-  delete: twMerge("bg-red-500 hover:bg-red-700"),
+  red: twMerge("bg-red-500 hover:bg-red-700"),
+  green: twMerge("bg-green-500 hover:bg-green-700"),
 } as const;
 
 type ButtonProps = {

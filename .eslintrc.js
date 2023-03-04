@@ -30,6 +30,5 @@ module.exports = {
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/no-unsafe-assignment": "error",
     "@next/next/no-html-link-for-pages": "off",
-    "import/order": "error",
   },
 };

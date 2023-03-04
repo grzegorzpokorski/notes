@@ -11,12 +11,17 @@ export type HTTPMethod =
   | "TRACE"
   | "PATCH";
 
-export const fetchQuery = async <T>(
-  url: string,
-  method: HTTPMethod,
-  schema: z.ZodType<T>,
-  body?: object,
-) => {
+export const fetchQuery = async <T>({
+  url,
+  method,
+  schema,
+  body,
+}: {
+  url: string;
+  method: HTTPMethod;
+  schema: z.ZodType<T>;
+  body?: object;
+}) => {
   const response = await fetch(url, {
     headers: {
       "Content-Type": "application/json",

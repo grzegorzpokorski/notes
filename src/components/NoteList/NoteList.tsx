@@ -1,15 +1,23 @@
 import { fetchQuery } from "@/lib/fetchQuery";
-import { productsShema } from "@/utlis/shemas";
+import { notesSchema } from "@/utlis/schemas";
 import { useQuery } from "@tanstack/react-query";
-import { Container } from "../Container/Container";
+import { useCallback } from "react";
 import { NoteItem } from "../NoteItem/NoteItem";
 
 export const NoteList = () => {
-  const { data, isSuccess, isLoading } = useQuery({
+  const { data, isSuccess, isLoading, refetch } = useQuery({
     queryKey: ["notes"],
     queryFn: async () =>
-      await fetchQuery("http://localhost:3000/api/notes", "GET", productsShema),
+      await fetchQuery({
+        url: "http://localhost:3000/api/notes",
+        method: "GET",
+        schema: notesSchema,
+      }),
   });
+
+  const refetchNotes = useCallback(() => {
+    void refetch();
+  }, [refetch]);
 
   if (isLoading) return <p>loading...</p>;
 
@@ -32,6 +40,7 @@ export const NoteList = () => {
                 createdAt: new Date(note.createdAt),
                 updatedAt: new Date(note.updatedAt),
               }}
+              refetchNotes={refetchNotes}
             />
           ))}
         </ul>

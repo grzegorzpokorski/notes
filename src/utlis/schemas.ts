@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const productsShema = z.object({
+export const notesSchema = z.object({
   data: z.array(
     z.object({
       id: z.number(),

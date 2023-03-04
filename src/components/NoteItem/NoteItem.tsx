@@ -21,9 +21,6 @@ export const NoteItem = ({
       });
       console.log(x);
     },
-    // await fetch(`http://localhost:3000/api/note/${id}`, {
-    //   method: "DELETE",
-    // }),
     onSuccess: () => refetchNotes(),
   });
 

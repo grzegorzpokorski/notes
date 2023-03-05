@@ -11,7 +11,7 @@ export const AddNewNoteFormSkeleton = () => (
         </div>
         <div className="w-full px-3">
           <div className="h-4 w-32 rounded mb-2 bg-zinc-200"></div>
-          <div className="h-16 w-full rounded mb-2 bg-zinc-200"></div>
+          <div className="h-20 w-full rounded mb-2 bg-zinc-200"></div>
         </div>
       </div>
       <div className="flex flex-col flex-wrap justify-center mt-1">

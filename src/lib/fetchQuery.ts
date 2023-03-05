@@ -1,4 +1,3 @@
-import { noteSchema } from "@/utlis/schemas";
 import { z } from "zod";
 
 export type HTTPMethod =

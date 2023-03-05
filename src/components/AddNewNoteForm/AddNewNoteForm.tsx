@@ -1,9 +1,11 @@
 import { useCreateNote } from "@/hooks/useCreateNote";
 import { FormEvent, useState } from "react";
-import { Button } from "../Button/Button";
-import { NoteListHeader } from "../NoteListHeader/NoteListHeader";
+import { Button } from "@/components/Button/Button";
+import { NoteListHeader } from "@/components/NoteListHeader/NoteListHeader";
 import { z } from "zod";
 import { FaSpinner } from "react-icons/fa";
+import { Input } from "@/components/Input/Input";
+import { Textarea } from "@/components/Textarea/Textarea";
 
 export const AddNewNoteForm = ({
   refetchNotes,
@@ -38,48 +40,33 @@ export const AddNewNoteForm = ({
     setNote({ title: null, content: null });
   };
 
-  const isDisabled = note.content === null || note.title === null;
+  const isDisabled =
+    note.content === null ||
+    note.title === null ||
+    note.title.length === 0 ||
+    note.content.length === 0;
 
   return (
     <section>
       <NoteListHeader content="Dodaj nową notatkę" as="h2" />
       <form className="flex flex-col py-6" onSubmit={handleCreateNote}>
         <div className="flex flex-wrap">
-          <div className="w-full">
-            <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              htmlFor="grid-title"
-            >
-              Tytuł notatki
-            </label>
-            <input
-              name="title"
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
-              id="grid-title"
-              type="text"
-              onChange={(e) => {
-                setNote((prev) => ({ ...prev, title: e.target.value }));
-              }}
-              value={note.title || ""}
-            />
-          </div>
-          <div className="w-full">
-            <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              htmlFor="grid-title"
-            >
-              Treść notatki
-            </label>
-            <textarea
-              name="content"
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
-              id="grid-title"
-              onChange={(e) => {
-                setNote((prev) => ({ ...prev, content: e.target.value }));
-              }}
-              value={note.content || ""}
-            />
-          </div>
+          <Input
+            label="Tytuł notatki"
+            value={note.title || ""}
+            name="title"
+            onChange={(e) => {
+              setNote((prev) => ({ ...prev, title: e.target.value }));
+            }}
+          />
+          <Textarea
+            label="Treść notatki"
+            name="content"
+            value={note.content || ""}
+            onChange={(e) => {
+              setNote((prev) => ({ ...prev, content: e.target.value }));
+            }}
+          />
         </div>
         <div className="flex flex-col flex-wrap justify-center">
           <Button

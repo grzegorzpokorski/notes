@@ -3,7 +3,7 @@ import { noteSchema } from "@/utlis/schemas";
 import { Note } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 import { useCallback, useState } from "react";
-import { FaEdit, FaPlus, FaSave, FaSpinner, FaTrash } from "react-icons/fa";
+import { FaEdit, FaPlus, FaSave, FaTrash } from "react-icons/fa";
 import { Button } from "../Button/Button";
 import { NoteItemSkaleton } from "../Loading/NoteItemSkeleton";
 

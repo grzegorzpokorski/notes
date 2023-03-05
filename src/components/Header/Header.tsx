@@ -14,13 +14,13 @@ export const Header = () => {
   return (
     <header className="fixed top-0 right-0 left-0 bg-white border-b-2 h-16 drop-shadow-md">
       <Container className="w-full h-full flex">
-        <div className="flex w-full flex-row items-center justify-between">
-          <p className="text-md font-bold">Notes</p>
+        <nav className="flex w-full flex-row items-center justify-between">
+          <h1 className="text-md font-bold">Notes</h1>
           <div className="flex flex-row gap-3">
             <UserImage />
             <LogoutButton />
           </div>
-        </div>
+        </nav>
       </Container>
     </header>
   );

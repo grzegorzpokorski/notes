@@ -7,23 +7,17 @@ export const UserImage = () => {
   const { data: session, status } = useSession();
 
   if (status !== "authenticated")
-    return (
-      <div className="flex items-center" role="status">
-        <div className="rounded w-10 h-10 bg-zinc-200"></div>
-      </div>
-    );
+    return <div className="rounded w-10 h-10 bg-zinc-200" role="status"></div>;
 
   if (session.user?.image) {
     return (
-      <div className="flex items-center">
-        <Image
-          src={session.user.image}
-          alt={`${session.user.name} avatar`}
-          width={40}
-          height={40}
-          className="rounded"
-        />
-      </div>
+      <Image
+        src={session.user.image}
+        alt={`${session.user.name} avatar`}
+        width={40}
+        height={40}
+        className="rounded"
+      />
     );
   }
 

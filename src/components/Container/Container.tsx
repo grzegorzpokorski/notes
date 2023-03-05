@@ -9,7 +9,7 @@ export const Container = ({
   className?: string;
 }) => {
   return (
-    <div className={twMerge("mx-auto px-3 max-w-4xl", className)}>
+    <div className={twMerge("mx-auto px-3 max-w-2xl", className)}>
       {children}
     </div>
   );

@@ -1,3 +1,4 @@
+import { noteSchema } from "@/utlis/schemas";
 import { z } from "zod";
 
 export type HTTPMethod =
@@ -11,7 +12,7 @@ export type HTTPMethod =
   | "TRACE"
   | "PATCH";
 
-export const fetchQuery = async <T>({
+export async function fetchQuery<T>({
   url,
   method,
   schema,
@@ -21,7 +22,7 @@ export const fetchQuery = async <T>({
   method: HTTPMethod;
   schema: z.ZodType<T>;
   body?: object;
-}) => {
+}) {
   const response = await fetch(url, {
     headers: {
       "Content-Type": "application/json",
@@ -36,4 +37,4 @@ export const fetchQuery = async <T>({
 
   const data = (await response.json()) as unknown;
   return schema.parse(data);
-};
+}

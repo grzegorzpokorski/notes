@@ -26,12 +26,11 @@ export const NoteItem = ({
 
   const deleteNote = useMutation({
     mutationFn: async (id: number) => {
-      const x = await fetchQuery({
+      await fetchQuery({
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/note/${id}`,
         method: "DELETE",
         schema: noteSchema,
       });
-      console.log(x);
     },
     onSuccess: () => refetchNotes(),
   });
@@ -46,12 +45,11 @@ export const NoteItem = ({
       newTitle: string;
       newContent: string;
     }) =>
-      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/notex/${id}`, {
+      await fetchQuery({
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/note/${id}`,
         method: "PATCH",
-        body: JSON.stringify({ title: newTitle, content: newContent }),
-        headers: {
-          "Content-type": "application/json",
-        },
+        schema: noteSchema,
+        body: { title: newTitle, content: newContent },
       }),
     onSuccess: () => refetchNotes(),
   });

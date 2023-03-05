@@ -28,7 +28,7 @@ export const NoteList = () => {
     <section>
       <AddNewNoteForm refetchNotes={refetchNotes} />
       {isSuccess && data.data.length === 0 && (
-        <NoteListHeader title="Nie masz notatek" />
+        <NoteListHeader content="Nie masz notatek" />
       )}
       {isSuccess && data.data.length > 0 && (
         <>
@@ -39,7 +39,7 @@ export const NoteList = () => {
             </>
           ) : (
             <>
-              <NoteListHeader title={`Twoje notatki (${data.data.length})`} />
+              <NoteListHeader content={`Twoje notatki (${data.data.length})`} />
               <ul className="list-none divide-y-2" role="list">
                 {data.data.map((note) => (
                   <NoteItem

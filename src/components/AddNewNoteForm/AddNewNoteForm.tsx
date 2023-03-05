@@ -3,15 +3,16 @@ import { FormEvent, useState } from "react";
 import { Button } from "../Button/Button";
 import { NoteListHeader } from "../NoteListHeader/NoteListHeader";
 import { z } from "zod";
+import { FaSpinner } from "react-icons/fa";
 
 export const AddNewNoteForm = ({
   refetchNotes,
 }: {
   refetchNotes: () => void;
 }) => {
-  const createNote = useCreateNote({ onSuccess: refetchNotes });
+  const { mutate, isLoading } = useCreateNote({ onSuccess: refetchNotes });
 
-  const [data, setData] = useState<{
+  const [note, setNote] = useState<{
     title: string | null;
     content: string | null;
   }>({
@@ -19,7 +20,7 @@ export const AddNewNoteForm = ({
     content: null,
   });
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleCreateNote = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const dataSchema = z.object({
@@ -27,24 +28,24 @@ export const AddNewNoteForm = ({
       content: z.string().min(1),
     });
 
-    const result = dataSchema.parse(data);
+    const result = dataSchema.parse(note);
 
     if (isDisabled || !result) {
       return;
     }
 
-    createNote.mutate({ title: result.title, content: result.content });
-    setData({ title: null, content: null });
+    mutate({ title: result.title, content: result.content });
+    setNote({ title: null, content: null });
   };
 
-  const isDisabled = data.content === null || data.title === null;
+  const isDisabled = note.content === null || note.title === null;
 
   return (
     <section>
-      <NoteListHeader title="Dodaj nową notatkę" />
-      <form className="flex flex-col py-6" onSubmit={onSubmit}>
-        <div className="flex flex-wrap -mx-3">
-          <div className="w-full px-3">
+      <NoteListHeader content="Dodaj nową notatkę" as="h2" />
+      <form className="flex flex-col py-6" onSubmit={handleCreateNote}>
+        <div className="flex flex-wrap">
+          <div className="w-full">
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
               htmlFor="grid-title"
@@ -53,16 +54,16 @@ export const AddNewNoteForm = ({
             </label>
             <input
               name="title"
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
               id="grid-title"
               type="text"
               onChange={(e) => {
-                setData((prev) => ({ ...prev, title: e.target.value }));
+                setNote((prev) => ({ ...prev, title: e.target.value }));
               }}
-              value={data.title || ""}
+              value={note.title || ""}
             />
           </div>
-          <div className="w-full px-3">
+          <div className="w-full">
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
               htmlFor="grid-title"
@@ -71,18 +72,29 @@ export const AddNewNoteForm = ({
             </label>
             <textarea
               name="content"
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
               id="grid-title"
               onChange={(e) => {
-                setData((prev) => ({ ...prev, content: e.target.value }));
+                setNote((prev) => ({ ...prev, content: e.target.value }));
               }}
-              value={data.content || ""}
+              value={note.content || ""}
             />
           </div>
         </div>
         <div className="flex flex-col flex-wrap justify-center">
-          <Button label="Dodaj" buttonType="submit" disabled={isDisabled} />
-          {createNote.isLoading && "saving..."}
+          <Button
+            label={
+              isLoading ? (
+                <>
+                  Zapisywanie <FaSpinner className="animate-spin" />
+                </>
+              ) : (
+                "Dodaj"
+              )
+            }
+            buttonType="submit"
+            disabled={isDisabled}
+          />
         </div>
       </form>
     </section>

@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 const defaultStyles =
-  "inline-flex gap-1.5 justify-center items-center rounded text-white disabled:cursor-not-allowed";
+  "inline-flex gap-1.5 justify-center items-center rounded text-white disabled:cursor-not-allowed transition-colors";
 type Colors = "default" | "red" | "green";
 
 type Type = "button" | "submit";

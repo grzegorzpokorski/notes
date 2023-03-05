@@ -1,3 +1,4 @@
+import { useUpdateNote } from "@/hooks/useUpdateNote";
 import { fetchQuery } from "@/lib/fetchQuery";
 import { noteSchema } from "@/utlis/schemas";
 import { Note } from "@prisma/client";
@@ -35,24 +36,7 @@ export const NoteItem = ({ note, refetchNotes }: NoteItemProps) => {
     onSuccess: () => refetchNotes(),
   });
 
-  const updateNote = useMutation({
-    mutationFn: async ({
-      id,
-      newTitle,
-      newContent,
-    }: {
-      id: number;
-      newTitle: string;
-      newContent: string;
-    }) =>
-      await fetchQuery({
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/note/${id}`,
-        method: "PATCH",
-        schema: noteSchema,
-        body: { title: newTitle, content: newContent },
-      }),
-    onSuccess: () => refetchNotes(),
-  });
+  const updateNote = useUpdateNote({ onSuccess: refetchNotes });
 
   const isSaveButtonDisabled =
     (data.title === note.title && data.content === note.content) ||
@@ -124,8 +108,8 @@ export const NoteItem = ({ note, refetchNotes }: NoteItemProps) => {
               onClick={() => {
                 updateNote.mutate({
                   id: note.id,
-                  newContent: data.content,
-                  newTitle: data.title,
+                  content: data.content,
+                  title: data.title,
                 });
                 setIsEdit(false);
               }}

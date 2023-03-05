@@ -1,8 +1,6 @@
+import { useDeleteNote } from "@/hooks/useDeleteNote";
 import { useUpdateNote } from "@/hooks/useUpdateNote";
-import { fetchQuery } from "@/lib/fetchQuery";
-import { noteSchema } from "@/utlis/schemas";
 import { Note } from "@prisma/client";
-import { useMutation } from "@tanstack/react-query";
 import { useCallback, useState } from "react";
 import { FaEdit, FaPlus, FaSave, FaTrash } from "react-icons/fa";
 import { Button } from "../Button/Button";
@@ -25,17 +23,7 @@ export const NoteItem = ({ note, refetchNotes }: NoteItemProps) => {
     [note.content, note.title],
   );
 
-  const deleteNote = useMutation({
-    mutationFn: async (id: number) => {
-      await fetchQuery({
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/note/${id}`,
-        method: "DELETE",
-        schema: noteSchema,
-      });
-    },
-    onSuccess: () => refetchNotes(),
-  });
-
+  const deleteNote = useDeleteNote({ onSuccess: refetchNotes });
   const updateNote = useUpdateNote({ onSuccess: refetchNotes });
 
   const isSaveButtonDisabled =

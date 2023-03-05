@@ -1,6 +1,4 @@
-import { fetchQuery } from "@/lib/fetchQuery";
-import { notesSchema } from "@/utlis/schemas";
-import { useQuery } from "@tanstack/react-query";
+import { useGetNotes } from "@/hooks/useGetNotes";
 import { useCallback } from "react";
 import { AddNewNoteForm } from "../AddNewNoteForm/AddNewNoteForm";
 import { AddNewNoteFormSkeleton } from "../Loading/AddNewNoteFormSkeleton";
@@ -10,15 +8,7 @@ import { NoteItem } from "../NoteItem/NoteItem";
 import { NoteListHeader } from "../NoteListHeader/NoteListHeader";
 
 export const NoteList = () => {
-  const { data, isSuccess, isLoading, refetch, isRefetching } = useQuery({
-    queryKey: ["notes"],
-    queryFn: async () =>
-      await fetchQuery({
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/notes`,
-        method: "GET",
-        schema: notesSchema,
-      }),
-  });
+  const { data, isSuccess, isLoading, refetch, isRefetching } = useGetNotes();
 
   const refetchNotes = useCallback(() => {
     void refetch();

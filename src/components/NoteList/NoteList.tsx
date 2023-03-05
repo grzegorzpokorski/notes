@@ -1,14 +1,12 @@
-import { useGetNotes } from "@/hooks/useGetNotes";
 import { Note } from "@prisma/client";
 import { NoteItem } from "../NoteItem/NoteItem";
 
-export const NoteList = ({
-  notes,
-  refetchNotes,
-}: {
+type NoteListProps = {
   notes: Note[];
   refetchNotes: () => void;
-}) => {
+};
+
+export const NoteList = ({ notes, refetchNotes }: NoteListProps) => {
   return (
     <ul className="list-none divide-y-2" role="list">
       {notes.map((note) => (

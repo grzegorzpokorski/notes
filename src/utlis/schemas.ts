@@ -4,8 +4,8 @@ const note = z.object({
   id: z.number(),
   title: z.string(),
   content: z.string(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  createdAt: z.string().datetime(),
+  updatedAt: z.string().datetime(),
   userId: z.string(),
 });
 

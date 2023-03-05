@@ -92,7 +92,7 @@ export const NoteItem = ({ note, refetchNotes }: NoteItemProps) => {
                   zapisz <FaSave />
                 </>
               }
-              variant="green"
+              color="green"
               onClick={() => {
                 updateNote.mutate({
                   id: note.id,
@@ -123,7 +123,7 @@ export const NoteItem = ({ note, refetchNotes }: NoteItemProps) => {
                   usuń <FaTrash />
                 </>
               }
-              variant="red"
+              color="red"
               onClick={() => {
                 deleteNote.mutate(note.id);
               }}

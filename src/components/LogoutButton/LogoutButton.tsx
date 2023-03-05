@@ -1,15 +1,16 @@
 "use client";
 
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { Button } from "@/components/Button/Button";
 
 export const LogoutButton = () => {
+  const { status } = useSession();
   return (
-    <button
-      type="button"
+    <Button
       onClick={() => void signOut()}
-      className="inline-flex gap-3 items-center rounded text-base bg-blue-600 hover:bg-blue-800 text-white py-2 px-4"
-    >
-      Wyloguj się
-    </button>
+      size="large"
+      disabled={status !== "authenticated"}
+      label={<>Wyloguj się</>}
+    />
   );
 };

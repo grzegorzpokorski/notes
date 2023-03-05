@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { LoginButton } from "../LoginButton/LoginButton";
+import { LoginButton } from "@/components/LoginButton/LoginButton";
 
 export const LoginPage = () => {
   const { status } = useSession();

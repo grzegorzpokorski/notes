@@ -1,16 +1,27 @@
 "use client";
 
-import { signIn } from "next-auth/react";
-import { FaGithub } from "react-icons/fa";
+import { signIn, useSession } from "next-auth/react";
+import { FaGithub, FaSpinner } from "react-icons/fa";
+import { Button } from "../Button/Button";
 
 export const LoginButton = () => {
+  const { status } = useSession();
   return (
-    <button
-      type="button"
+    <Button
       onClick={() => void signIn("github")}
-      className="inline-flex gap-3 items-center rounded text-base bg-blue-600 hover:bg-blue-800 text-white py-2 px-4"
-    >
-      Zaloguj się przez Githuba <FaGithub />
-    </button>
+      size="large"
+      disabled={status !== "unauthenticated"}
+      label={
+        status === "unauthenticated" ? (
+          <>
+            Zaloguj się przez Githuba <FaGithub />
+          </>
+        ) : (
+          <>
+            Ładowanie <FaSpinner className="animate-spin" />
+          </>
+        )
+      }
+    />
   );
 };

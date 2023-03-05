@@ -9,7 +9,7 @@ export const NoteList = () => {
     queryKey: ["notes"],
     queryFn: async () =>
       await fetchQuery({
-        url: "http://localhost:3000/api/notes",
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/notes`,
         method: "GET",
         schema: notesSchema,
       }),
@@ -17,6 +17,7 @@ export const NoteList = () => {
 
   const refetchNotes = useCallback(() => {
     void refetch();
+    console.log("refetch notes");
   }, [refetch]);
 
   if (isLoading) return <p>loading...</p>;

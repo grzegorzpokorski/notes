@@ -27,12 +27,32 @@ export const NoteItem = ({
   const deleteNote = useMutation({
     mutationFn: async (id: number) => {
       const x = await fetchQuery({
-        url: `http://localhost:3000/api/note/${id}`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/note/${id}`,
         method: "DELETE",
         schema: noteSchema,
       });
       console.log(x);
     },
+    onSuccess: () => refetchNotes(),
+  });
+
+  const updateNote = useMutation({
+    mutationFn: async ({
+      id,
+      newTitle,
+      newContent,
+    }: {
+      id: number;
+      newTitle: string;
+      newContent: string;
+    }) =>
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/notex/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ title: newTitle, content: newContent }),
+        headers: {
+          "Content-type": "application/json",
+        },
+      }),
     onSuccess: () => refetchNotes(),
   });
 
@@ -60,10 +80,7 @@ export const NoteItem = ({
           </>
         ) : (
           <>
-            <h3 className="font-medium text-md">
-              {/* {note.id} */}
-              {note.title}
-            </h3>
+            <h3 className="font-medium text-md">{note.title}</h3>
             <p>{note.content}</p>
           </>
         )}
@@ -79,13 +96,12 @@ export const NoteItem = ({
               }
               variant="green"
               onClick={() => {
-                const confirmation = confirm(
-                  `Potwierdzasz usunięcie notatki o id: ${note.id}?`,
-                );
-
-                if (confirmation) {
-                  deleteNote.mutate(note.id);
-                }
+                updateNote.mutate({
+                  id: note.id,
+                  newContent: data.content,
+                  newTitle: data.title,
+                });
+                setIsEdit(false);
               }}
             />
             <Button

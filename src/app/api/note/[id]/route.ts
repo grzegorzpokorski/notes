@@ -44,7 +44,6 @@ export const DELETE = async (
   context: { params: { id: number } },
 ) => {
   const session = await getServerSession(authOptions);
-
   const id = Number(context.params.id);
 
   if (!session || !session.user?.email) {
@@ -69,9 +68,9 @@ export const DELETE = async (
 
   if (!note) {
     return new Response(
-      JSON.stringify({ statusCode: 404, error: "Not found" }),
+      JSON.stringify({ statusCode: 403, error: "Forbidden" }),
       {
-        status: 404,
+        status: 403,
       },
     );
   }
@@ -86,7 +85,10 @@ export const DELETE = async (
     return new Response(JSON.stringify({ data }), { status: 200 });
   }
 
-  return new Response(JSON.stringify({ statusCode: 404, error: "Not found" }), {
-    status: 404,
-  });
+  return new Response(
+    JSON.stringify({ statusCode: 400, error: "Bad request" }),
+    {
+      status: 400,
+    },
+  );
 };

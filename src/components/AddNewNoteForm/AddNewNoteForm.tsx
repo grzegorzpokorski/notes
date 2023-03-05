@@ -1,32 +1,15 @@
-import { fetchQuery } from "@/lib/fetchQuery";
-import { noteSchema } from "@/utlis/schemas";
-import { useMutation } from "@tanstack/react-query";
-import { FormEvent, useEffect, useState } from "react";
-import { string, z } from "zod";
+import { useCreateNote } from "@/hooks/useCreateNote";
+import { FormEvent, useState } from "react";
 import { Button } from "../Button/Button";
 import { NoteListHeader } from "../NoteListHeader/NoteListHeader";
+import { z } from "zod";
 
 export const AddNewNoteForm = ({
   refetchNotes,
 }: {
   refetchNotes: () => void;
 }) => {
-  const createNote = useMutation({
-    mutationFn: async ({
-      title,
-      content,
-    }: {
-      title: string;
-      content: string;
-    }) =>
-      await fetchQuery({
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/note`,
-        method: "POST",
-        body: { title, content },
-        schema: noteSchema,
-      }),
-    onSuccess: () => refetchNotes(),
-  });
+  const createNote = useCreateNote({ onSuccess: refetchNotes });
 
   const [data, setData] = useState<{
     title: string | null;

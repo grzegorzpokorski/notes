@@ -3,6 +3,9 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { AddNewNoteFormSkeleton } from "../Loading/AddNewNoteFormSkeleton";
+import { NotesListHeaderSkeleton } from "../Loading/NotesListHeaderSkeleton";
+import { NotesListSkeleton } from "../Loading/NotesListSkeleton";
 import { NoteList } from "../NoteList/NoteList";
 
 export const UserPage = () => {
@@ -15,8 +18,14 @@ export const UserPage = () => {
     }
   }, [router, status]);
 
-  if (status === "loading") {
-    return <p>loading</p>;
+  if (status !== "authenticated") {
+    return (
+      <>
+        <AddNewNoteFormSkeleton />
+        <NotesListHeaderSkeleton />
+        <NotesListSkeleton />
+      </>
+    );
   }
 
   if (status === "authenticated") {

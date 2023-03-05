@@ -1,10 +1,16 @@
-import { Button } from "@/components/Button/Button";
+"use client";
+
 import { Container } from "@/components/Container/Container";
+import { useSession } from "next-auth/react";
+import { HeaderSkeleton } from "../Loading/HeaderSkeleton";
 import { LogoutButton } from "../LogoutButton/LogoutButton";
-import { FaPlus } from "react-icons/fa";
 import { UserImage } from "../UserImage/UserImage";
 
 export const Header = () => {
+  const { status } = useSession();
+
+  if (status !== "authenticated") return <HeaderSkeleton />;
+
   return (
     <header className="fixed top-0 right-0 left-0 bg-white border-b-2 h-16 drop-shadow-md">
       <Container className="w-full h-full flex">
@@ -13,7 +19,6 @@ export const Header = () => {
           <div className="flex flex-row gap-3">
             <UserImage />
             <LogoutButton />
-            <Button label={<FaPlus />} />
           </div>
         </div>
       </Container>

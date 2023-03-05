@@ -6,7 +6,12 @@ import Image from "next/image";
 export const UserImage = () => {
   const { data: session, status } = useSession();
 
-  if (status !== "authenticated") return null;
+  if (status !== "authenticated")
+    return (
+      <div className="flex items-center" role="status">
+        <div className="rounded w-10 h-10 bg-zinc-200"></div>
+      </div>
+    );
 
   if (session.user?.image) {
     return (

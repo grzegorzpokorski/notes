@@ -2,10 +2,15 @@ import { fetchQuery } from "@/lib/fetchQuery";
 import { notesSchema } from "@/utlis/schemas";
 import { useQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
+import { AddNewNoteForm } from "../AddNewNoteForm/AddNewNoteForm";
+import { AddNewNoteFormSkeleton } from "../Loading/AddNewNoteFormSkeleton";
+import { NotesListHeaderSkeleton } from "../Loading/NotesListHeaderSkeleton";
+import { NotesListSkeleton } from "../Loading/NotesListSkeleton";
 import { NoteItem } from "../NoteItem/NoteItem";
+import { NoteListHeader } from "../NoteListHeader/NoteListHeader";
 
 export const NoteList = () => {
-  const { data, isSuccess, isLoading, refetch } = useQuery({
+  const { data, isSuccess, isLoading, refetch, isRefetching } = useQuery({
     queryKey: ["notes"],
     queryFn: async () =>
       await fetchQuery({
@@ -20,31 +25,47 @@ export const NoteList = () => {
     console.log("refetch notes");
   }, [refetch]);
 
-  if (isLoading) return <p>loading...</p>;
+  if (isLoading)
+    return (
+      <>
+        <AddNewNoteFormSkeleton />
+        <NotesListHeaderSkeleton />
+        <NotesListSkeleton />
+      </>
+    );
 
   return (
     <section>
-      <header className="text-center py-6 border-b-2">
-        <h2 className="text-xl font-medium">
-          {isSuccess && data.data.length > 0
-            ? "Twoje notatki"
-            : "Nie masz notatek"}
-        </h2>
-      </header>
+      <AddNewNoteForm refetchNotes={refetchNotes} />
+      {isSuccess && data.data.length === 0 && (
+        <NoteListHeader title="Nie masz notatek" />
+      )}
       {isSuccess && data.data.length > 0 && (
-        <ul className="list-none divide-y-2" role="list">
-          {data.data.map((note) => (
-            <NoteItem
-              key={note.id}
-              note={{
-                ...note,
-                createdAt: new Date(note.createdAt),
-                updatedAt: new Date(note.updatedAt),
-              }}
-              refetchNotes={refetchNotes}
-            />
-          ))}
-        </ul>
+        <>
+          {isRefetching ? (
+            <>
+              <NotesListHeaderSkeleton />
+              <NotesListSkeleton />
+            </>
+          ) : (
+            <>
+              <NoteListHeader title={`Twoje notatki (${data.data.length})`} />
+              <ul className="list-none divide-y-2" role="list">
+                {data.data.map((note) => (
+                  <NoteItem
+                    key={note.id}
+                    note={{
+                      ...note,
+                      createdAt: new Date(note.createdAt),
+                      updatedAt: new Date(note.updatedAt),
+                    }}
+                    refetchNotes={refetchNotes}
+                  />
+                ))}
+              </ul>
+            </>
+          )}
+        </>
       )}
     </section>
   );

@@ -3,16 +3,16 @@ import { noteSchema } from "@/utlis/schemas";
 import { Note } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 import { useCallback, useState } from "react";
-import { FaEdit, FaPlus, FaSave, FaTrash } from "react-icons/fa";
+import { FaEdit, FaPlus, FaSave, FaSpinner, FaTrash } from "react-icons/fa";
 import { Button } from "../Button/Button";
+import { NoteItemSkaleton } from "../Loading/NoteItemSkeleton";
 
-export const NoteItem = ({
-  note,
-  refetchNotes,
-}: {
+type NoteItemProps = {
   note: Note;
   refetchNotes: () => void;
-}) => {
+};
+
+export const NoteItem = ({ note, refetchNotes }: NoteItemProps) => {
   const [isEdit, setIsEdit] = useState(false);
   const [data, setData] = useState({
     title: note.title,
@@ -54,27 +54,55 @@ export const NoteItem = ({
     onSuccess: () => refetchNotes(),
   });
 
+  const isSaveButtonDisabled =
+    (data.title === note.title && data.content === note.content) ||
+    data.content.length === 0 ||
+    data.title.length === 0;
+
+  if (deleteNote.isLoading) return <NoteItemSkaleton />;
+
   return (
-    <li className="py-6 flex flex-col md:flex-row gap-6">
+    <li className="py-6 flex flex-col md:flex-row gap-3 md:gap-6">
       <article className="w-full flex flex-col gap-2">
         {isEdit ? (
           <>
-            <input
-              value={data.title}
-              onChange={(e) =>
-                setData((prev) => {
-                  return { ...prev, title: e.target.value };
-                })
-              }
-            />
-            <textarea
-              value={data.content}
-              onChange={(e) =>
-                setData((prev) => {
-                  return { ...prev, content: e.target.value };
-                })
-              }
-            ></textarea>
+            <div className="w-full">
+              <label
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                htmlFor="edit-form-title"
+              >
+                Tytuł notatki
+              </label>
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="edit-form-title"
+                type="text"
+                value={data.title}
+                onChange={(e) =>
+                  setData((prev) => {
+                    return { ...prev, title: e.target.value };
+                  })
+                }
+              />
+            </div>
+            <div className="w-full">
+              <label
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                htmlFor="edit-form-content"
+              >
+                Treść notatki
+              </label>
+              <textarea
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="edit-form-content"
+                value={data.content}
+                onChange={(e) =>
+                  setData((prev) => {
+                    return { ...prev, content: e.target.value };
+                  })
+                }
+              />
+            </div>
           </>
         ) : (
           <>
@@ -101,6 +129,7 @@ export const NoteItem = ({
                 });
                 setIsEdit(false);
               }}
+              disabled={isSaveButtonDisabled}
             />
             <Button
               label={
@@ -124,13 +153,7 @@ export const NoteItem = ({
               }
               variant="red"
               onClick={() => {
-                const confirmation = confirm(
-                  `Potwierdzasz usunięcie notatki o id: ${note.id}?`,
-                );
-
-                if (confirmation) {
-                  deleteNote.mutate(note.id);
-                }
+                deleteNote.mutate(note.id);
               }}
             />
             <Button

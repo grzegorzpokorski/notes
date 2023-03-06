@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { LoginButton } from "@/components/LoginButton/LoginButton";
+import { LoginButtons } from "@/components/LoginButtons/LoginButtons";
 
 export const LoginPage = () => {
   const { status } = useSession();
@@ -16,12 +16,16 @@ export const LoginPage = () => {
   }, [router, status]);
 
   return (
-    <main className="mx-auto flex max-w-[520px] min-h-screen flex-col items-center justify-center gap-6 p-8">
-      <header className="text-center">
-        <h1 className="text-3xl font-bold">Notes</h1>
-        <p>Twoje miejsce na notatki</p>
-      </header>
-      <LoginButton />
+    <main className="min-h-screen flex flex-col">
+      <div className="max-w-sm w-full m-auto">
+        <header className="flex flex-col gap-6 text-center bg-white rounded-md py-16 px-6 drop-shadow m-6">
+          <div>
+            <h1 className="text-3xl font-bold">Notes</h1>
+            <p>Miejsce na Twoje notatki</p>
+          </div>
+          <LoginButtons />
+        </header>
+      </div>
     </main>
   );
 };

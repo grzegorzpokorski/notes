@@ -53,7 +53,7 @@ export const NoteItem = ({ note, refetchNotes }: NoteItemProps) => {
   if (deleteNote.isLoading || updateNote.isLoading) return <NoteItemSkaleton />;
 
   return (
-    <li className="py-6 flex flex-col md:flex-row gap-3 md:gap-6">
+    <li className="flex flex-col md:flex-row gap-3 md:gap-6 p-6 bg-white rounded-md drop-shadow">
       <article className="w-full flex flex-col gap-2">
         {isEdit ? (
           <>
@@ -80,8 +80,8 @@ export const NoteItem = ({ note, refetchNotes }: NoteItemProps) => {
           </>
         ) : (
           <>
-            <h3 className="font-medium text-md">{note.title}</h3>
-            <p>{note.content}</p>
+            <h3 className="font-bold text-md text-gray-800">{note.title}</h3>
+            <p className="text-gray-600 text-base">{note.content}</p>
           </>
         )}
       </article>

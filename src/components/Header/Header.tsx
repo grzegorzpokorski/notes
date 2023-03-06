@@ -12,10 +12,10 @@ export const Header = () => {
   if (status !== "authenticated") return <HeaderSkeleton />;
 
   return (
-    <header className="fixed top-0 right-0 left-0 bg-white border-b-2 h-16 drop-shadow-md">
+    <header className="fixed top-0 right-0 left-0 h-16 bg-white drop-shadow z-20">
       <Container className="w-full h-full flex">
         <nav className="flex w-full flex-row items-center justify-between">
-          <h1 className="text-md font-bold">Notes</h1>
+          <h1 className="text-lg font-bold">Notes</h1>
           <div className="flex flex-row gap-3">
             <UserImage />
             <LogoutButton />

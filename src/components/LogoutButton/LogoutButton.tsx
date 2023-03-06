@@ -13,7 +13,11 @@ export const LogoutButton = () => {
       disabled={status !== "authenticated"}
       label={
         <>
-          Wyloguj się <FaPowerOff />
+          <span className="hidden md:inline" aria-hidden="true">
+            Wyloguj się
+          </span>{" "}
+          <FaPowerOff />
+          <span className="sr-only">Wyloguj się</span>
         </>
       }
     />

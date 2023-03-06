@@ -11,7 +11,10 @@ const rubik = Rubik({
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="pl" className={`${rubik.variable} scrollbar-gutter-stable`}>
+    <html
+      lang="pl"
+      className={`${rubik.variable} scrollbar-gutter-stable bg-gray-200`}
+    >
       <body>
         <AppProviders>{children}</AppProviders>
       </body>

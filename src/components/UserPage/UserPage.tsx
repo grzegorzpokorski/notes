@@ -5,10 +5,8 @@ import { useGetNotes } from "@/hooks/useGetNotes";
 import { parseNotes } from "@/utlis/parseNotes";
 import { AddNewNoteForm } from "@/components/AddNewNoteForm/AddNewNoteForm";
 import { AddNewNoteFormSkeleton } from "@/components/Loading/AddNewNoteFormSkeleton";
-import { NotesListHeaderSkeleton } from "@/components/Loading/NotesListHeaderSkeleton";
 import { NotesListSkeleton } from "@/components/Loading/NotesListSkeleton";
 import { NoteList } from "@/components/NoteList/NoteList";
-import { NoteListHeader } from "@/components/NoteListHeader/NoteListHeader";
 
 export const UserPage = () => {
   const { data, isSuccess, isLoading, refetch, isRefetching } = useGetNotes();
@@ -19,30 +17,22 @@ export const UserPage = () => {
 
   if (isLoading) {
     return (
-      <>
+      <div className="mt-6 gap-6" role="status">
         <AddNewNoteFormSkeleton />
-        <NotesListHeaderSkeleton />
         <NotesListSkeleton />
-      </>
+      </div>
     );
   }
 
   return (
-    <section>
+    <section className="flex flex-col mt-6 gap-6">
       <AddNewNoteForm refetchNotes={refetchNotes} />
-      {isSuccess && data.data.length === 0 && (
-        <NoteListHeader content="Nie masz notatek" />
-      )}
       {isSuccess && data.data.length > 0 && (
         <>
           {isRefetching ? (
-            <>
-              <NotesListHeaderSkeleton />
-              <NotesListSkeleton />
-            </>
+            <NotesListSkeleton className="mt-6" />
           ) : (
             <>
-              <NoteListHeader content={`Twoje notatki (${data.data.length})`} />
               <NoteList
                 notes={parseNotes(data.data)}
                 refetchNotes={refetchNotes}

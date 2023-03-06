@@ -4,7 +4,7 @@ import { signIn, useSession } from "next-auth/react";
 import { FaGithub, FaGoogle, FaSpinner } from "react-icons/fa";
 import { Button } from "../Button/Button";
 
-export const LoginButton = () => {
+export const LoginButtons = () => {
   const { status } = useSession();
 
   if (status !== "unauthenticated") {

@@ -8,7 +8,7 @@ type NoteListProps = {
 
 export const NoteList = ({ notes, refetchNotes }: NoteListProps) => {
   return (
-    <ul className="list-none divide-y-2" role="list">
+    <ul className="list-none flex flex-col flex-wrap gap-6 my-6" role="list">
       {notes.map((note) => (
         <NoteItem key={note.id} note={note} refetchNotes={refetchNotes} />
       ))}

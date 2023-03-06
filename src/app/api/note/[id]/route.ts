@@ -6,12 +6,12 @@ import { z } from "zod";
 
 export const GET = async (
   request: Request,
-  context: { params: { id: unknown } },
+  context: { params: { id: string } },
 ) => {
   const session = await getServerSession(authOptions);
-  const id = context.params.id;
+  const id = Number(context.params.id);
 
-  if (typeof id !== "number") {
+  if (isNaN(id)) {
     return new Response(
       JSON.stringify({ statusCode: 400, error: "Bad request" }),
       { status: 400 },
@@ -49,10 +49,17 @@ export const GET = async (
 
 export const DELETE = async (
   request: Request,
-  context: { params: { id: number } },
+  context: { params: { id: string } },
 ) => {
   const session = await getServerSession(authOptions);
   const id = Number(context.params.id);
+
+  if (isNaN(id)) {
+    return new Response(
+      JSON.stringify({ statusCode: 400, error: "Bad request" }),
+      { status: 400 },
+    );
+  }
 
   if (!session || !session.user?.email) {
     return new Response(
@@ -108,11 +115,18 @@ const bodySchema = z.object({
 
 export const PATCH = async (
   request: NextRequest,
-  context: { params: { id: number } },
+  context: { params: { id: string } },
 ) => {
   const session = await getServerSession(authOptions);
-  const id = Number(context.params.id);
   const result = bodySchema.safeParse(await request.json());
+  const id = Number(context.params.id);
+
+  if (isNaN(id)) {
+    return new Response(
+      JSON.stringify({ statusCode: 400, error: "Bad request" }),
+      { status: 400 },
+    );
+  }
 
   if (!result.success) {
     return new Response(

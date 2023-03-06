@@ -9,6 +9,10 @@ const rubik = Rubik({
   variable: "--font-rubik",
 });
 
+export const metadata = {
+  title: { default: "Notes", template: "Notes | %s" },
+};
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html

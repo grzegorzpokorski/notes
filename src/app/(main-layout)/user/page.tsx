@@ -4,6 +4,10 @@ import { UserPage } from "@/components/UserPage/UserPage";
 import { UserPageSkeleton } from "@/components/Loading/UserPageSkaleton";
 import { Suspense } from "react";
 
+export const metadata = {
+  title: "twoje notatki",
+};
+
 export default function Page() {
   return (
     <Container>

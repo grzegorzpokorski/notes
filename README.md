@@ -17,7 +17,6 @@ Simple web app to hold notes with social login.
 
 Required: node.js v18 and docker with `docker compose` command.
 
-
 1. Clone this repository:
 
 ```
@@ -47,20 +46,15 @@ pnpm dev
 
 [https://notes-nine-navy.vercel.app/](https://notes-nine-navy.vercel.app/)
 
-<!--
 ## Some screenshots:
 
-![](/mockups/start.png?raw=true "Home page")
+![](/screenshots/1-login-page.png?raw=true)
 
-![](/mockups/page.png?raw=true "Single page")
+![](/screenshots/2-add-note-form.png?raw=true)
 
-![](/mockups/blog.png?raw=true "Blog archive")
+![](/screenshots/3-edit-note.png?raw=true)
 
-![](/mockups/pricing.png?raw=true "Pricing page")
-
-![](/mockups/offer.png?raw=true "Offer page")
-
-![](/mockups/single.png?raw=true "Single article page") -->
+![](/screenshots/4-skeleton.png?raw=true)
 
 ## Contributing
 

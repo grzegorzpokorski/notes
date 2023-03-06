@@ -5,7 +5,6 @@ import type { ReactNode } from "react";
 import { AppProviders } from "@/providers/AppProviders";
 
 const rubik = Rubik({
-  subsets: ["latin", "latin-ext"],
   variable: "--font-rubik",
 });
 

@@ -49,17 +49,10 @@ export const GET = async (
 
 export const DELETE = async (
   request: Request,
-  context: { params: { id: unknown } },
+  context: { params: { id: number } },
 ) => {
   const session = await getServerSession(authOptions);
-  const id = context.params.id;
-
-  if (typeof id !== "number") {
-    return new Response(
-      JSON.stringify({ statusCode: 400, error: "Bad request" }),
-      { status: 400 },
-    );
-  }
+  const id = Number(context.params.id);
 
   if (!session || !session.user?.email) {
     return new Response(
@@ -115,18 +108,10 @@ const bodySchema = z.object({
 
 export const PATCH = async (
   request: NextRequest,
-  context: { params: { id: unknown } },
+  context: { params: { id: number } },
 ) => {
   const session = await getServerSession(authOptions);
-  const id = context.params.id;
-
-  if (typeof id !== "number") {
-    return new Response(
-      JSON.stringify({ statusCode: 400, error: "Bad request" }),
-      { status: 400 },
-    );
-  }
-
+  const id = Number(context.params.id);
   const result = bodySchema.safeParse(await request.json());
 
   if (!result.success) {

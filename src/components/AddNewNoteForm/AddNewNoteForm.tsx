@@ -1,11 +1,11 @@
-import { useCreateNote } from "@/hooks/useCreateNote";
 import { FormEvent, useState } from "react";
+import { z } from "zod";
+import { useCreateNote } from "@/hooks/useCreateNote";
 import { Button } from "@/components/Button/Button";
 import { NoteListHeader } from "@/components/NoteListHeader/NoteListHeader";
-import { z } from "zod";
-import { FaSpinner } from "react-icons/fa";
 import { Input } from "@/components/Input/Input";
 import { Textarea } from "@/components/Textarea/Textarea";
+import { FaSpinner } from "react-icons/fa";
 
 export const AddNewNoteForm = ({
   refetchNotes,

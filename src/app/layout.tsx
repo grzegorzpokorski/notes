@@ -1,4 +1,4 @@
-import "../styles/global.css";
+import "@/styles/global.css";
 
 import { Rubik } from "next/font/google";
 import type { ReactNode } from "react";
@@ -11,7 +11,7 @@ const rubik = Rubik({
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="pl" className={`${rubik.variable}`}>
+    <html lang="pl" className={`${rubik.variable} scrollbar-gutter-stable`}>
       <body>
         <AppProviders>{children}</AppProviders>
       </body>

@@ -1,12 +1,12 @@
+import { useCallback, useState } from "react";
+import { Note } from "@prisma/client";
 import { useDeleteNote } from "@/hooks/useDeleteNote";
 import { useUpdateNote } from "@/hooks/useUpdateNote";
-import { Note } from "@prisma/client";
-import { useCallback, useState } from "react";
-import { FaEdit, FaPlus, FaSave, FaTrash } from "react-icons/fa";
-import { Button } from "@/components/Button/Button";
 import { Input } from "@/components/Input/Input";
-import { NoteItemSkaleton } from "@/components/Loading/NoteItemSkeleton";
 import { Textarea } from "@/components/Textarea/Textarea";
+import { Button } from "@/components/Button/Button";
+import { NoteItemSkaleton } from "@/components/Loading/NoteItemSkeleton";
+import { FaEdit, FaPlus, FaSave, FaTrash } from "react-icons/fa";
 
 type NoteItemProps = {
   note: Note;
@@ -27,6 +27,23 @@ export const NoteItem = ({ note, refetchNotes }: NoteItemProps) => {
 
   const deleteNote = useDeleteNote({ onSuccess: refetchNotes });
   const updateNote = useUpdateNote({ onSuccess: refetchNotes });
+
+  const onEdit = () => setIsEdit(true);
+  const onDelete = () => {
+    deleteNote.mutate(note.id);
+  };
+  const onSave = () => {
+    updateNote.mutate({
+      id: note.id,
+      content: data.content,
+      title: data.title,
+    });
+    setIsEdit(false);
+  };
+  const onCancel = useCallback(() => {
+    setIsEdit(false);
+    resetData();
+  }, [resetData]);
 
   const isSaveButtonDisabled =
     (data.title === note.title && data.content === note.content) ||
@@ -78,14 +95,7 @@ export const NoteItem = ({ note, refetchNotes }: NoteItemProps) => {
                 </>
               }
               color="green"
-              onClick={() => {
-                updateNote.mutate({
-                  id: note.id,
-                  content: data.content,
-                  title: data.title,
-                });
-                setIsEdit(false);
-              }}
+              onClick={onSave}
               disabled={isSaveButtonDisabled}
             />
             <Button
@@ -94,10 +104,7 @@ export const NoteItem = ({ note, refetchNotes }: NoteItemProps) => {
                   anuluj <FaPlus className="rotate-45" />
                 </>
               }
-              onClick={() => {
-                setIsEdit(false);
-                resetData();
-              }}
+              onClick={onCancel}
             />
           </>
         ) : (
@@ -109,9 +116,7 @@ export const NoteItem = ({ note, refetchNotes }: NoteItemProps) => {
                 </>
               }
               color="red"
-              onClick={() => {
-                deleteNote.mutate(note.id);
-              }}
+              onClick={onDelete}
             />
             <Button
               label={
@@ -119,7 +124,7 @@ export const NoteItem = ({ note, refetchNotes }: NoteItemProps) => {
                   edytuj <FaEdit />
                 </>
               }
-              onClick={() => setIsEdit(true)}
+              onClick={onEdit}
             />
           </>
         )}

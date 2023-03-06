@@ -2,16 +2,16 @@ import type { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 const defaultStyles =
-  "inline-flex gap-1.5 justify-center items-center rounded text-white disabled:cursor-not-allowed transition-colors";
+  "inline-flex gap-1.5 justify-center items-center rounded text-white disabled:cursor-not-allowed transition-colors disabled:bg-gray-300";
 type Colors = "default" | "red" | "green" | "github";
 
 type Type = "button" | "submit";
 
 const colors = {
-  default: twMerge("bg-blue-600 hover:bg-blue-800 disabled:bg-blue-400"),
-  red: twMerge("bg-red-500 hover:bg-red-700 disabled:bg-red-400"),
-  green: twMerge("bg-green-500 hover:bg-green-700 disabled:bg-green-400"),
-  github: twMerge("bg-zinc-700 hover:bg-zinc-800 disabled:bg-zinc-600"),
+  default: twMerge("bg-blue-600 hover:bg-blue-800"),
+  red: twMerge("bg-red-500 hover:bg-red-700"),
+  green: twMerge("bg-green-500 hover:bg-green-700"),
+  github: twMerge("bg-zinc-700 hover:bg-zinc-800"),
 } as const;
 
 type Sizes = "default" | "large";
@@ -21,7 +21,7 @@ const sizes = {
 } as const;
 
 type ButtonProps = {
-  label: ReactNode;
+  children: ReactNode;
   buttonType?: Type;
   color?: Colors;
   size?: Sizes;
@@ -30,7 +30,7 @@ type ButtonProps = {
 };
 
 export const Button = ({
-  label,
+  children,
   buttonType = "button",
   color = "default",
   size = "default",
@@ -44,7 +44,7 @@ export const Button = ({
       onClick={onClick}
       disabled={disabled}
     >
-      {label}
+      {children}
     </button>
   );
 };

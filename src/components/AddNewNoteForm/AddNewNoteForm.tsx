@@ -72,19 +72,15 @@ export const AddNewNoteForm = ({
         />
       </div>
       <div className="flex flex-col flex-wrap justify-center">
-        <Button
-          label={
-            isLoading ? (
-              <>
-                Zapisywanie <FaSpinner className="animate-spin" />
-              </>
-            ) : (
-              "Dodaj"
-            )
-          }
-          buttonType="submit"
-          disabled={isDisabled}
-        />
+        <Button buttonType="submit" disabled={isDisabled}>
+          {isLoading ? (
+            <>
+              Zapisywanie <FaSpinner className="animate-spin" />
+            </>
+          ) : (
+            "Dodaj"
+          )}
+        </Button>
       </div>
     </form>
   );

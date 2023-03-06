@@ -1,12 +1,11 @@
-import { useCallback, useState } from "react";
 import { Note } from "@prisma/client";
-import { useDeleteNote } from "@/hooks/useDeleteNote";
-import { useUpdateNote } from "@/hooks/useUpdateNote";
 import { Input } from "@/components/Input/Input";
 import { Textarea } from "@/components/Textarea/Textarea";
 import { Button } from "@/components/Button/Button";
 import { NoteItemSkaleton } from "@/components/Loading/NoteItemSkeleton";
 import { FaEdit, FaPlus, FaSave, FaTrash } from "react-icons/fa";
+import { useNoteItem } from "@/hooks/useNoteItem";
+import { NoteContent } from "./NoteContent/NoteContent";
 
 type NoteItemProps = {
   note: Note;
@@ -14,43 +13,22 @@ type NoteItemProps = {
 };
 
 export const NoteItem = ({ note, refetchNotes }: NoteItemProps) => {
-  const [isEdit, setIsEdit] = useState(false);
-  const [data, setData] = useState({
-    title: note.title,
-    content: note.content,
+  const {
+    isEdit,
+    enableEditMode,
+    setEditedNote,
+    editedNote,
+    onCancel,
+    onDelete,
+    onSave,
+    isLoading,
+    isSaveButtonDisabled,
+  } = useNoteItem({
+    note,
+    onSuccess: refetchNotes,
   });
 
-  const resetData = useCallback(
-    () => setData({ title: note.title, content: note.content }),
-    [note.content, note.title],
-  );
-
-  const deleteNote = useDeleteNote({ onSuccess: refetchNotes });
-  const updateNote = useUpdateNote({ onSuccess: refetchNotes });
-
-  const onEdit = () => setIsEdit(true);
-  const onDelete = () => {
-    deleteNote.mutate(note.id);
-  };
-  const onSave = () => {
-    updateNote.mutate({
-      id: note.id,
-      content: data.content,
-      title: data.title,
-    });
-    setIsEdit(false);
-  };
-  const onCancel = useCallback(() => {
-    setIsEdit(false);
-    resetData();
-  }, [resetData]);
-
-  const isSaveButtonDisabled =
-    (data.title === note.title && data.content === note.content) ||
-    data.content.length === 0 ||
-    data.title.length === 0;
-
-  if (deleteNote.isLoading || updateNote.isLoading) return <NoteItemSkaleton />;
+  if (isLoading) return <NoteItemSkaleton />;
 
   return (
     <li className="flex flex-col md:flex-row gap-3 md:gap-6 p-6 bg-white rounded-md drop-shadow">
@@ -60,72 +38,46 @@ export const NoteItem = ({ note, refetchNotes }: NoteItemProps) => {
             <Input
               label="Tytuł notatki"
               name="title"
-              value={data.title}
+              value={editedNote.title}
               onChange={(e) =>
-                setData((prev) => {
-                  return { ...prev, title: e.target.value };
-                })
+                setEditedNote({ ...editedNote, title: e.target.value })
               }
             />
             <Textarea
               label="Treść notatki"
               name="content"
-              value={data.content}
+              value={editedNote.content}
               onChange={(e) =>
-                setData((prev) => {
-                  return { ...prev, content: e.target.value };
-                })
+                setEditedNote({ ...editedNote, content: e.target.value })
               }
             />
           </>
         ) : (
-          <>
-            <h3 className="font-bold text-md text-gray-800">{note.title}</h3>
-            <p className="text-gray-600 text-base">{note.content}</p>
-          </>
+          <NoteContent title={note.title} content={note.content} />
         )}
       </article>
       <div className="flex flex-row md:flex-col gap-2">
         {isEdit ? (
           <>
             <Button
-              label={
-                <>
-                  zapisz <FaSave />
-                </>
-              }
               color="green"
               onClick={onSave}
               disabled={isSaveButtonDisabled}
-            />
-            <Button
-              label={
-                <>
-                  anuluj <FaPlus className="rotate-45" />
-                </>
-              }
-              onClick={onCancel}
-            />
+            >
+              zapisz <FaSave />
+            </Button>
+            <Button onClick={onCancel}>
+              anuluj <FaPlus className="rotate-45" />
+            </Button>
           </>
         ) : (
           <>
-            <Button
-              label={
-                <>
-                  usuń <FaTrash />
-                </>
-              }
-              color="red"
-              onClick={onDelete}
-            />
-            <Button
-              label={
-                <>
-                  edytuj <FaEdit />
-                </>
-              }
-              onClick={onEdit}
-            />
+            <Button color="red" onClick={onDelete}>
+              usuń <FaTrash />
+            </Button>
+            <Button onClick={enableEditMode}>
+              edytuj <FaEdit />
+            </Button>
           </>
         )}
       </div>

@@ -9,15 +9,12 @@ export const LoginButtons = () => {
 
   if (status !== "unauthenticated") {
     return (
-      <Button
-        size="large"
-        disabled={true}
-        label={
-          <>
-            Ładowanie <FaSpinner className="animate-spin" />
-          </>
-        }
-      />
+      <span
+        role="status"
+        className="flex flex-row items-center justify-center gap-1"
+      >
+        Ładowanie <FaSpinner className="animate-spin" />
+      </span>
     );
   }
 
@@ -28,22 +25,16 @@ export const LoginButtons = () => {
         size="large"
         color="github"
         disabled={status !== "unauthenticated"}
-        label={
-          <>
-            Zaloguj się przez Githuba <FaGithub />
-          </>
-        }
-      />
+      >
+        Zaloguj się przez Githuba <FaGithub />
+      </Button>
       <Button
         onClick={() => void signIn("google")}
         size="large"
         disabled={status !== "unauthenticated"}
-        label={
-          <>
-            Zaloguj się przez Google <FaGoogle />
-          </>
-        }
-      />
+      >
+        Zaloguj się przez Google <FaGoogle />
+      </Button>
     </div>
   );
 };

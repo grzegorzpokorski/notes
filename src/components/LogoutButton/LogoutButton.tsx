@@ -11,15 +11,12 @@ export const LogoutButton = () => {
       onClick={() => void signOut()}
       size="large"
       disabled={status !== "authenticated"}
-      label={
-        <>
-          <span className="hidden md:inline" aria-hidden="true">
-            Wyloguj się
-          </span>{" "}
-          <FaPowerOff />
-          <span className="sr-only">Wyloguj się</span>
-        </>
-      }
-    />
+    >
+      <span className="hidden md:inline" aria-hidden="true">
+        Wyloguj się
+      </span>{" "}
+      <FaPowerOff />
+      <span className="sr-only">Wyloguj się</span>
+    </Button>
   );
 };

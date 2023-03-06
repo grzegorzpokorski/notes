@@ -11,6 +11,7 @@ Simple web app to hold notes with social login.
 5. Prisma
 6. Postgresql (Supabase)
 7. next-auth
+8. TanStack Query
 
 ## Installation 👷
 

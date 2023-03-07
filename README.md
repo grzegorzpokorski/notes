@@ -49,12 +49,16 @@ pnpm dev
 ## Some screenshots:
 
 ![](/screenshots/1-login-page.png?raw=true)
-
-![](/screenshots/2-add-note-form.png?raw=true)
+s
+![](/screenshots/2-user-page.png?raw=true)
 
 ![](/screenshots/3-edit-note.png?raw=true)
 
-![](/screenshots/4-skeleton.png?raw=true)
+![](/screenshots/4-add-new-note.png?raw=true)
+
+![](/screenshots/5-after-delete-note.png?raw=true)
+
+![](/screenshots/6-skeleton.png?raw=true)
 
 ## Contributing
 

@@ -11,7 +11,7 @@ export const LoginButtons = () => {
     return (
       <span
         role="status"
-        className="flex flex-row items-center justify-center gap-1"
+        className="flex flex-row items-center justify-center gap-2"
       >
         Ładowanie <FaSpinner className="animate-spin" />
       </span>

@@ -1,8 +1,8 @@
 import { Container } from "@/components/Container/Container";
 import { PrivateRoute } from "@/components/PrivateRoute/PrivateRoute";
 import { UserPage } from "@/components/UserPage/UserPage";
-import { UserPageSkeleton } from "@/components/Loading/UserPageSkaleton";
 import { Suspense } from "react";
+import { NotesListSkeleton } from "@/components/Loading/NotesListSkeleton";
 
 export const metadata = {
   title: "twoje notatki",
@@ -11,7 +11,7 @@ export const metadata = {
 export default function Page() {
   return (
     <Container>
-      <Suspense fallback={<UserPageSkeleton />}>
+      <Suspense fallback={<NotesListSkeleton />}>
         <PrivateRoute>
           <UserPage />
         </PrivateRoute>

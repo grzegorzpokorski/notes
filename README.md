@@ -49,7 +49,7 @@ pnpm dev
 ## Some screenshots:
 
 ![](/screenshots/1-login-page.png?raw=true)
-s
+
 ![](/screenshots/2-user-page.png?raw=true)
 
 ![](/screenshots/3-edit-note.png?raw=true)

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { Suspense, useCallback } from "react";
 import { useGetNotes } from "@/hooks/useGetNotes";
 import { parseNotes } from "@/utlis/parseNotes";
 import { NotesListSkeleton } from "@/components/Loading/NotesListSkeleton";
@@ -31,9 +31,11 @@ export const UserPage = () => {
             />
           </>
         ) : (
-          <h2 className="text-center mt-6 uppercase text-sm font-bold text-gray-800">
-            Nie masz notatek
-          </h2>
+          <section className="min-h-[calc(100vh-64px)] flex flex-col items-center justify-center">
+            <h2 className="text-center mt-6 uppercase text-sm font-bold text-gray-800">
+              Nie masz notatek
+            </h2>
+          </section>
         )}
       </section>
       {isModalOpen && <AddNewNoteModal refetchNotes={refetchNotes} />}

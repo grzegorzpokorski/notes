@@ -21,10 +21,12 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = useCallback(() => {
+    document.body.classList.add("overflow-hidden");
     setIsModalOpen(true);
   }, []);
 
   const closeModal = useCallback(() => {
+    document.body.classList.remove("overflow-hidden");
     setIsModalOpen(false);
   }, []);
 

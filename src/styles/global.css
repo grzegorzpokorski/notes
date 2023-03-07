@@ -6,6 +6,8 @@ body {
   @apply flex min-h-[100dvh] flex-col;
 }
 
-.scrollbar-gutter-stable {
-  scrollbar-gutter: stable;
+@layer components {
+  .scrollbar-gutter-stable {
+    scrollbar-gutter: stable;
+  }
 }

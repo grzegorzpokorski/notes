@@ -31,7 +31,7 @@ export const UserPage = () => {
             />
           </>
         ) : (
-          <section className="min-h-[calc(100vh-64px)] flex flex-col items-center justify-center">
+          <section className="min-h-[calc(100dvh-64px)] flex flex-col items-center justify-center">
             <h2 className="text-center mt-6 uppercase text-sm font-bold text-gray-800">
               Nie masz notatek
             </h2>

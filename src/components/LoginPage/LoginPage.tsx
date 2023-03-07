@@ -16,7 +16,7 @@ export const LoginPage = () => {
   }, [router, status]);
 
   return (
-    <main className="min-h-[100dwh] flex flex-col">
+    <main className="min-h-[100dvh] flex flex-col">
       <div className="max-w-sm w-full m-auto">
         <header className="flex flex-col gap-6 text-center bg-white rounded-md py-16 px-6 drop-shadow m-6">
           <div>

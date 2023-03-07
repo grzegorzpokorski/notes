@@ -8,13 +8,14 @@ export const UserImage = () => {
 
   if (status === "authenticated" && session.user?.image) {
     return (
-      <Image
-        src={session.user.image}
-        alt={`${session.user.name} avatar`}
-        width={40}
-        height={40}
-        className="rounded"
-      />
+      <div className="relative aspect-square h-auto w-11 my-auto">
+        <Image
+          src={session.user.image}
+          alt={`${session.user.name} avatar`}
+          className="rounded"
+          fill
+        />
+      </div>
     );
   }
 

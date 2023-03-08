@@ -62,4 +62,11 @@ pnpm dev
 
 ## Contributing
 
-If you find any bug, have suggestion how to improve this project feel free to tell about it in [issues](https://github.com/grzegorzpokorski/grzegorzpokorski.pl/issues) tab. Pull requests also are welcoming.
+If you find any bug, have suggestion how to improve this project feel free to tell about it in [issues](https://github.com/grzegorzpokorski/notes.pl/issues) tab. Pull requests also are welcoming.
+
+## To do:
+
+- categories
+- ability to pin note on top of the list
+- sorting
+- search 

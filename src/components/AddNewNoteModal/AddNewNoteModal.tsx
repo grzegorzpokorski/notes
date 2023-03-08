@@ -6,6 +6,7 @@ import { Input } from "@/components/Input/Input";
 import { Textarea } from "@/components/Textarea/Textarea";
 import { FaPlus, FaSpinner } from "react-icons/fa";
 import { useUIContext } from "@/providers/UIProvider";
+import { useOnKeydown } from "@/hooks/useOnKeydown";
 
 type AddNewNoteModalProps = {
   refetchNotes: () => void;
@@ -51,6 +52,8 @@ export const AddNewNoteModal = ({ refetchNotes }: AddNewNoteModalProps) => {
     note.title === null ||
     note.title.length === 0 ||
     note.content.length === 0;
+
+  useOnKeydown("Escape", closeModal);
 
   return (
     <div

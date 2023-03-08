@@ -11,7 +11,7 @@ export const UserImage = () => {
       <div className="relative aspect-square h-auto w-11 my-auto">
         <Image
           src={session.user.image}
-          alt={`${session.user.name} avatar`}
+          alt={`${session.user.name} awatar`}
           className="rounded"
           fill
         />
